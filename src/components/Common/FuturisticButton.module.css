@@ -1,0 +1,45 @@
+.buttonContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.buttonGlow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.robotic-button-primary:hover .buttonGlow {
+  background: radial-gradient(circle, rgba(0, 247, 255, 0.3) 0%, transparent 70%);
+  opacity: 1;
+}
+
+.robotic-button-secondary:hover .buttonGlow {
+  background: radial-gradient(circle, rgba(0, 179, 255, 0.2) 0%, transparent 70%);
+  opacity: 1;
+}
+
+.small {
+  padding: 8px 16px !important;
+  font-size: 0.875rem;
+}
+
+.medium {
+  padding: 12px 24px !important;
+  font-size: 1rem;
+}
+
+.large {
+  padding: 16px 32px !important;
+  font-size: 1.125rem;
+}

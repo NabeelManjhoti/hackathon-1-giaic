@@ -1,0 +1,401 @@
+---
+title: Chapter 6 - Control Systems
+sidebar_label: 'Chapter 6: Control Systems'
+---
+
+# Chapter 6: Control Systems
+
+## Overview
+
+Robot control systems are the brain and nervous system of robotic platforms, determining how robots respond to commands and interact with their environment. This chapter explores classical and modern control techniques, from PID controllers to advanced learning-based approaches, essential for achieving precise, stable, and adaptive robot behavior.
+
+## Learning Objectives
+
+After completing this chapter, you will be able to:
+- Design stable control systems for robotic applications
+- Implement adaptive control strategies for changing environments
+- Apply learning-based control methods for complex tasks
+- Analyze system stability using Lyapunov methods
+
+## Key Concepts
+
+- **PID Control**: Proportional-Integral-Derivative control, the workhorse of robotic control
+- **Lyapunov Stability**: Mathematical framework for analyzing system stability
+- **Model Predictive Control**: Optimization-based control using predictive models
+- **Robust Control**: Control design that maintains performance despite uncertainties
+
+## Introduction to Robot Control
+
+Robot control involves generating appropriate actuator commands to achieve desired robot behavior. Control systems must handle the complex dynamics of robotic mechanisms while responding to environmental interactions and achieving task objectives.
+
+### Control System Architecture
+
+Robot control typically follows a hierarchical structure:
+
+```
+High-Level Planner
+    ↓ (Trajectory)
+Mid-Level Controller
+    ↓ (Commands)
+Low-Level Actuator Control
+    ↓ (Motor Commands)
+Physical Robot
+    ↓ (Sensors)
+State Estimation
+```
+
+### Control Objectives
+
+Robot control systems must achieve multiple objectives:
+- **Stability**: System remains bounded under disturbances
+- **Accuracy**: Achieves desired trajectories with minimal error
+- **Robustness**: Maintains performance despite model uncertainties
+- **Adaptability**: Adjusts to changing conditions and tasks
+
+## Classical Control Theory
+
+### PID Control
+
+Proportional-Integral-Derivative (PID) control is the most widely used control strategy in robotics.
+
+#### Mathematical Formulation
+
+```
+u(t) = Kp * e(t) + Ki * ∫e(t)dt + Kd * de(t)/dt
+```
+
+Where:
+- u(t): Control output
+- e(t): Error signal (desired - actual)
+- Kp: Proportional gain
+- Ki: Integral gain
+- Kd: Derivative gain
+
+#### Tuning PID Controllers
+
+- **Proportional (P)**: Reduces steady-state error, increases response speed
+- **Integral (I)**: Eliminates steady-state error, may cause oscillations
+- **Derivative (D)**: Improves stability, reduces overshoot
+
+#### PID in Discrete Time
+
+```
+u[k] = u[k-1] + Kp*(e[k] - e[k-1]) + Ki*e[k] + Kd*(e[k] - 2*e[k-1] + e[k-2])
+```
+
+### Transfer Functions and System Modeling
+
+Transfer functions represent the relationship between input and output in the frequency domain:
+
+```
+G(s) = Y(s)/U(s)
+```
+
+Where s is the Laplace variable.
+
+#### Common Robot Transfer Functions
+
+For a simple mass-spring-damper system:
+```
+G(s) = 1/(ms² + bs + k)
+```
+
+Where m is mass, b is damping, and k is stiffness.
+
+### Stability Analysis
+
+#### Routh-Hurwitz Criterion
+
+Determines stability by examining the coefficients of the characteristic equation.
+
+#### Root Locus
+
+Visualizes how closed-loop poles move as gain changes.
+
+#### Bode Plots
+
+Shows frequency response and stability margins.
+
+## Adaptive Control
+
+Adaptive control systems adjust their parameters in real-time to maintain performance as system characteristics change.
+
+### Model Reference Adaptive Control (MRAC)
+
+MRAC adjusts controller parameters to make the plant behave like a reference model.
+
+#### MIT Rule
+
+```
+θ̇ = -γ * e * φ
+```
+
+Where θ are parameters, e is tracking error, φ is the regressor vector, and γ is the adaptation gain.
+
+### Self-Tuning Regulators
+
+Self-tuning regulators estimate system parameters online and adjust controller parameters accordingly.
+
+#### Recursive Least Squares (RLS)
+
+```
+θ̂[k] = θ̂[k-1] + K[k] * (y[k] - φ[k]ᵀ * θ̂[k-1])
+K[k] = P[k-1] * φ[k] / (λ + φ[k]ᵀ * P[k-1] * φ[k])
+P[k] = (1/λ) * (P[k-1] - K[k] * φ[k]ᵀ * P[k-1])
+```
+
+Where λ is the forgetting factor.
+
+### Direct vs Indirect Adaptive Control
+
+- **Direct**: Adjusts controller parameters directly
+- **Indirect**: Estimates plant parameters, then designs controller
+
+## Learning-based Control
+
+Learning-based control uses machine learning techniques to improve control performance.
+
+### Reinforcement Learning for Control
+
+Reinforcement learning treats control as a sequential decision-making problem.
+
+#### Q-Learning
+
+```
+Q(s,a) ← Q(s,a) + α[r + γ*max Q(s',a') - Q(s,a)]
+```
+
+Where α is the learning rate and γ is the discount factor.
+
+#### Actor-Critic Methods
+
+Separate networks for policy (actor) and value estimation (critic).
+
+### Neural Network Controllers
+
+Neural networks can approximate complex control functions:
+
+```python
+# Example neural network controller
+import torch
+import torch.nn as nn
+
+class NeuralController(nn.Module):
+    def __init__(self, state_dim, action_dim):
+        super().__init__()
+        self.network = nn.Sequential(
+            nn.Linear(state_dim, 64),
+            nn.ReLU(),
+            nn.Linear(64, 64),
+            nn.ReLU(),
+            nn.Linear(64, action_dim)
+        )
+
+    def forward(self, state):
+        return self.network(state)
+```
+
+### Imitation Learning
+
+Learn control policies by mimicking expert demonstrations.
+
+## Impedance Control
+
+Impedance control regulates the dynamic relationship between force and motion, making robots behave like mechanical impedances.
+
+### Impedance Model
+
+```
+M_d * (ẍ_d - ẍ) + B_d * (ẋ_d - ẋ) + K_d * (x_d - x) = F
+```
+
+Where:
+- M_d, B_d, K_d: Desired mass, damping, stiffness
+- x_d: Desired position
+- x: Actual position
+- F: Applied force
+
+### Hybrid Position/Force Control
+
+Combines position control in unconstrained directions with force control in constrained directions.
+
+### Admittance Control
+
+Admittance control is the dual of impedance control:
+
+```
+v = Y * F
+```
+
+Where Y is the admittance and F is the force.
+
+## Force Control
+
+Force control regulates contact forces between the robot and environment.
+
+### Force/Torque Sensors
+
+Force/torque sensors measure interaction forces and moments.
+
+### Force Control Architecture
+
+```
+Desired Force → Force Controller → Torque Controller → Robot → Force Sensor → Feedback
+```
+
+### Impedance vs Force Control
+
+- **Impedance Control**: Regulates dynamic relationship between force and motion
+- **Force Control**: Regulates contact force directly
+
+## Advanced Control Methods
+
+### Model Predictive Control (MPC)
+
+MPC solves an optimization problem at each time step, considering future predictions.
+
+#### Basic MPC Formulation
+
+```
+min Σ(k=0 to N-1) l(x[k], u[k]) + l_f(x[N])
+s.t. x[k+1] = f(x[k], u[k])
+     g(x[k], u[k]) ≤ 0
+     x[0] = x_current
+```
+
+Where l is the stage cost, l_f is the terminal cost, and g represents constraints.
+
+### Robust Control
+
+Robust control maintains performance despite model uncertainties.
+
+#### H-infinity Control
+
+Minimizes the worst-case effect of disturbances on the system.
+
+#### Structured Singular Value (μ) Synthesis
+
+Handles structured uncertainties in the system.
+
+### Optimal Control
+
+Optimal control finds control inputs that minimize a cost function.
+
+#### Linear Quadratic Regulator (LQR)
+
+For linear systems with quadratic costs:
+
+```
+J = ∫(xᵀQx + uᵀRu)dt
+```
+
+Optimal control: u = -Kx, where K = R⁻¹BᵀP and P is found by solving the Riccati equation.
+
+## Lyapunov Stability Theory
+
+Lyapunov methods provide a mathematical framework for analyzing system stability.
+
+### Lyapunov Functions
+
+A Lyapunov function V(x) must satisfy:
+- V(0) = 0
+- V(x) > 0 for all x ≠ 0
+- V̇(x) ≤ 0 for stability, V̇(x) < 0 for asymptotic stability
+
+### Example Lyapunov Analysis
+
+For system ẋ = f(x), if there exists V(x) such that:
+- V(x) is positive definite
+- V̇(x) = ∇V · f(x) is negative definite
+
+Then the origin is asymptotically stable.
+
+## Control Implementation Considerations
+
+### Sampling and Discretization
+
+Digital control systems must consider sampling effects:
+
+- **Aliasing**: High-frequency signals appearing as low-frequency
+- **Quantization**: Discrete representation of continuous signals
+- **Delay**: Computational and communication delays
+
+### Actuator Limitations
+
+Real actuators have limitations that must be considered:
+
+- **Saturation**: Limited force/torque output
+- **Rate Limits**: Maximum rate of change
+- **Dead Zones**: Regions with no response
+
+### Sensor Noise and Delays
+
+- **Filtering**: Reduce noise while preserving signal content
+- **Prediction**: Compensate for sensor delays
+- **Fusion**: Combine multiple sensor sources
+
+## Applications in Robotics
+
+### Manipulator Control
+
+- **Position Control**: Precise end-effector positioning
+- **Trajectory Tracking**: Following desired paths
+- **Force Control**: Regulating contact forces
+
+### Mobile Robot Control
+
+- **Path Following**: Tracking desired paths in the environment
+- **Obstacle Avoidance**: Reacting to unexpected obstacles
+- **Formation Control**: Coordinating multiple robots
+
+### Humanoid Control
+
+- **Balance Control**: Maintaining stability during locomotion
+- **Whole-Body Control**: Coordinating multiple tasks simultaneously
+- **Compliance**: Safe human-robot interaction
+
+## Challenges and Future Directions
+
+### Real-time Requirements
+
+- **Computational Complexity**: Advanced control methods require significant computation
+- **Communication**: Distributed control systems need fast communication
+- **Optimization**: Balancing performance with computational constraints
+
+### Uncertainty and Adaptation
+
+- **Model Uncertainty**: Real systems differ from mathematical models
+- **Environmental Changes**: Adapting to changing conditions
+- **Learning Efficiency**: Fast adaptation with limited data
+
+### Safety and Verification
+
+- **Formal Verification**: Mathematical guarantees of safety properties
+- **Robustness**: Maintaining safety under uncertainties
+- **Fail-safe Mechanisms**: Graceful degradation when control fails
+
+## Advanced Topics
+
+### Learning-based Robust Control
+
+Combining learning methods with robust control theory for adaptive yet safe control.
+
+### Event-triggered Control
+
+Control updates triggered by specific events rather than fixed time intervals.
+
+### Distributed Control
+
+Coordinating control across multiple agents or subsystems.
+
+## Summary
+
+Robot control systems are essential for achieving desired robot behavior, from simple PID controllers to sophisticated learning-based approaches. Modern robotics requires controllers that can handle complex dynamics, adapt to changing conditions, and maintain safety in uncertain environments.
+
+The field continues to evolve with advances in machine learning, optimization, and computational power, enabling increasingly sophisticated and capable robotic systems. As robots become more integrated into human environments, control systems must balance performance, safety, and adaptability.
+
+## Further Reading
+
+- Spong, M.W., Hutchinson, S., & Vidyasagar, M. (2006). Robot Modeling and Control. Wiley
+- Slotine, J.J.E., & Li, W. (1991). Applied Nonlinear Control. Prentice Hall
+- Åström, K.J., & Murray, R.M. (2008). Feedback Systems: An Introduction for Scientists and Engineers. Princeton University Press

@@ -1,0 +1,87 @@
+openapi: 3.0.0
+info:
+  title: GIAIC Robotix Book API
+  description: API for managing book content and AI-generated materials
+  version: 1.0.0
+paths:
+  /api/book/chapters:
+    get:
+      summary: Get all book chapters
+      responses:
+        '200':
+          description: List of all book chapters
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Chapter'
+  /api/book/chapters/{id}:
+    get:
+      summary: Get a specific chapter
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A single chapter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chapter'
+  /api/book/cover:
+    post:
+      summary: Generate a book cover using AI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CoverGenerationRequest'
+      responses:
+        '200':
+          description: Generated cover image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoverImage'
+components:
+  schemas:
+    Chapter:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        order:
+          type: integer
+        topic:
+          type: string
+    CoverGenerationRequest:
+      type: object
+      properties:
+        prompt:
+          type: string
+        style:
+          type: string
+        dimensions:
+          type: object
+          properties:
+            width:
+              type: integer
+            height:
+              type: integer
+    CoverImage:
+      type: object
+      properties:
+        url:
+          type: string
+        altText:
+          type: string
+        generatedBy:
+          type: string

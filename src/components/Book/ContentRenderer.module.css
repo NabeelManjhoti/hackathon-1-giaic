@@ -1,0 +1,79 @@
+.contentRenderer {
+  margin: 2rem 0;
+}
+
+.contentHeader {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--robotic-border-primary);
+  margin-bottom: 1.5rem;
+}
+
+.contentTitle {
+  margin: 0;
+  color: var(--robotic-accent-primary);
+  font-family: 'Orbitron', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 2rem;
+}
+
+.contentBody {
+  padding: 0 1rem;
+}
+
+.textContent {
+  line-height: 1.8;
+  color: var(--robotic-text-primary);
+}
+
+.textContent h2 {
+  color: var(--robotic-accent-secondary);
+  border-bottom: 1px solid var(--robotic-border-primary);
+  padding-bottom: 0.5rem;
+  margin-top: 2rem;
+  font-family: 'Orbitron', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.textContent h3 {
+  color: var(--robotic-accent-tertiary);
+  font-family: 'Orbitron', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 1.5rem;
+}
+
+.textContent p {
+  margin-bottom: 1rem;
+}
+
+.textContent ul, .textContent ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.textContent li {
+  margin-bottom: 0.5rem;
+}
+
+.textContent a {
+  color: var(--robotic-accent-primary);
+  text-decoration: underline;
+  transition: color var(--robotic-transition-fast);
+}
+
+.textContent a:hover {
+  color: var(--robotic-accent-secondary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .contentTitle {
+    font-size: 1.5rem;
+  }
+
+  .contentBody {
+    padding: 0 0.5rem;
+  }
+}

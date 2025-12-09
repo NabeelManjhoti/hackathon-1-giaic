@@ -8,6 +8,40 @@
   text-align: center;
   position: relative;
   overflow: hidden;
+  background: transparent !important;
+  z-index: 2; /* Above the animation */
+}
+
+.hero__subtitle {
+  color: var(--robotic-text-primary) !important;
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  font-weight: 300;
+}
+
+/* More specific selector when both classes are used together */
+.hero__subtitle.robotic-font-light {
+  color: var(--robotic-text-primary) !important;
+  opacity: 1 !important;
+}
+
+/* Override for the hero section specifically */
+.heroBanner .hero__subtitle {
+  color: var(--robotic-text-primary) !important;
+}
+
+/* Ensure all subheadings appear in white/light color in dark mode */
+.subtitle {
+  color: var(--robotic-text-primary) !important;
+}
+
+/* Additional styling for text elements */
+.text--center p {
+  color: var(--robotic-text-primary) !important;
+}
+
+.robotic-font-light {
+  color: var(--robotic-text-primary) !important;
 }
 
 @media screen and (max-width: 996px) {
@@ -20,4 +54,120 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+}
+
+.roboticBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.mainContent {
+  position: relative;
+  z-index: 2; /* Above the background animation */
+  min-height: 100vh;
+}
+
+.featuresSection {
+  padding: 4rem 0;
+  background: var(--robotic-bg-secondary);
+  border-radius: var(--robotic-mechanical-radius-xl);
+  margin: 2rem 0;
+}
+
+.roboticGridSection {
+  padding: 4rem 0;
+  margin: 4rem 0;
+  background: var(--robotic-bg-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.roboticGridSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(rgba(0, 247, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 247, 255, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  z-index: 0;
+}
+
+.roboticGridSection > div {
+  position: relative;
+  z-index: 1;
+}
+
+.roboticStatsSection {
+  padding: 2rem 0;
+  margin: 2rem 0;
+  background: var(--robotic-bg-secondary);
+  position: relative;
+  overflow: hidden;
+}
+
+.roboticStatsSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(45deg, transparent 75%, rgba(0, 179, 255, 0.03) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(0, 247, 255, 0.03) 75%);
+  background-size: 20px 20px;
+  z-index: 0;
+}
+
+.roboticStatsSection > div {
+  position: relative;
+  z-index: 1;
+}
+
+.additionalSection {
+  padding: 4rem 0;
+  margin: 4rem 0;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Robotic card enhancements */
+.robotic-card {
+  transition: all var(--robotic-transition-medium);
+  position: relative;
+  overflow: hidden;
+}
+
+.robotic-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--robotic-accent-primary), var(--robotic-accent-secondary), var(--robotic-accent-tertiary), var(--robotic-accent-primary));
+  border-radius: calc(var(--robotic-mechanical-radius-lg) + 2px);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity var(--robotic-transition-medium);
+}
+
+.robotic-card:hover::before {
+  opacity: 0.3;
+}
+
+.robotic-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--robotic-glow-primary), 0 10px 25px rgba(0, 0, 0, 0.3);
 }

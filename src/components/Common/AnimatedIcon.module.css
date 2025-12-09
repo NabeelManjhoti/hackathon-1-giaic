@@ -1,0 +1,64 @@
+.animatedIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.iconContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0;
+  color: transparent;
+}
+
+.small {
+  width: 16px;
+  height: 16px;
+}
+
+.medium {
+  width: 24px;
+  height: 24px;
+}
+
+.large {
+  width: 32px;
+  height: 32px;
+}
+
+.pulse {
+  animation: robotic-pulse 2s infinite;
+}
+
+.rotate {
+  animation: robotic-rotate 4s linear infinite;
+}
+
+.float {
+  animation: robotic-float 3s ease-in-out infinite;
+}
+
+/* Keyframes are already defined in the main CSS files, but we can add specific ones if needed */
+@keyframes robotic-pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes robotic-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes robotic-float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0px); }
+}

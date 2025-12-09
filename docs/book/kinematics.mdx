@@ -1,0 +1,212 @@
+---
+title: Chapter 4 - Kinematics
+sidebar_label: 'Chapter 4: Kinematics'
+---
+
+# Chapter 4: Kinematics
+
+## Overview
+
+Kinematics is the study of motion without considering the forces that cause it. In robotics, kinematics provides the mathematical foundation for understanding and controlling robot movement. This chapter explores both forward and inverse kinematics, essential for robot motion planning and control.
+
+## Learning Objectives
+
+After completing this chapter, you will be able to:
+- Calculate forward kinematics for robotic manipulators
+- Solve inverse kinematics problems using various methods
+- Understand the relationship between joint space and Cartesian space
+- Apply kinematic principles to robot trajectory planning
+
+## Key Concepts
+
+- **Forward Kinematics**: Computing the end-effector position and orientation given joint angles
+- **Inverse Kinematics**: Computing joint angles required to achieve a desired end-effector position
+- **Denavit-Hartenberg Parameters**: A systematic method for defining coordinate frames on robotic links
+- **Jacobian Matrix**: Relating joint velocities to end-effector velocities
+
+## Introduction to Robot Kinematics
+
+Robot kinematics is fundamental to robot motion control, enabling precise positioning and manipulation. It involves two main problems:
+
+1. **Forward Kinematics**: Given joint variables, find the end-effector pose
+2. **Inverse Kinematics**: Given an end-effector pose, find the joint variables
+
+### Coordinate Systems and Transformations
+
+Robot kinematics relies on coordinate systems to represent positions and orientations in space. The most common representations include:
+
+- **Cartesian Coordinates**: (x, y, z) for position
+- **Rotation Matrices**: 3x3 matrices for orientation
+- **Quaternions**: 4-parameter representation of rotations
+- **Euler Angles**: Three angles representing sequential rotations
+
+## Forward Kinematics
+
+Forward kinematics involves computing the position and orientation of the robot's end-effector based on known joint angles.
+
+### Transformation Matrices
+
+A transformation matrix combines rotation and translation:
+
+```
+T = [R  p]
+    [0  1]
+```
+
+Where R is a 3x3 rotation matrix and p is a 3x1 position vector.
+
+### Denavit-Hartenberg Convention
+
+The Denavit-Hartenberg (DH) convention provides a systematic method for assigning coordinate frames to robot links:
+
+1. **z-axis**: Along the joint axis
+2. **x-axis**: Along the common normal between consecutive z-axes
+3. **y-axis**: Completes the right-handed coordinate system
+
+The four DH parameters are:
+- **a**: Link length (distance along x-axis)
+- **α**: Link twist (angle about x-axis)
+- **d**: Link offset (distance along z-axis)
+- **θ**: Joint angle (angle about z-axis)
+
+### Example: 2-DOF Planar Manipulator
+
+For a simple 2-DOF planar manipulator with link lengths L1 and L2:
+
+```
+x = L1*cos(θ1) + L2*cos(θ1 + θ2)
+y = L1*sin(θ1) + L2*sin(θ1 + θ2)
+```
+
+## Inverse Kinematics
+
+Inverse kinematics is more complex than forward kinematics, often having multiple solutions or no solution at all.
+
+### Analytical Methods
+
+Analytical solutions exist for simple robot configurations:
+
+#### Pieper's Solution
+For robots with three intersecting axes or three parallel axes, analytical solutions are possible.
+
+#### Geometric Methods
+Using geometric relationships to solve for joint angles directly.
+
+### Numerical Methods
+
+For complex robots, numerical methods are often necessary:
+
+#### Jacobian-Based Methods
+Using the Jacobian matrix to relate joint velocities to end-effector velocities:
+
+```
+v = J(θ) * θ̇
+```
+
+Where v is the end-effector velocity, J(θ) is the Jacobian matrix, and θ̇ is the joint velocity vector.
+
+#### Iterative Methods
+- **Newton-Raphson**: Quadratic convergence but requires good initial guess
+- **Gauss-Newton**: Modified for least-squares problems
+- **Levenberg-Marquardt**: Combination of Gauss-Newton and gradient descent
+
+### Jacobian Matrix
+
+The Jacobian matrix is crucial for velocity kinematics:
+
+```
+J = [∂x/∂θ1  ∂x/∂θ2  ...  ∂x/∂θn]
+    [∂y/∂θ1  ∂y/∂θ2  ...  ∂y/∂θn]
+    [∂z/∂θ1  ∂z/∂θ2  ...  ∂z/∂θn]
+    [∂α/∂θ1  ∂α/∂θ2  ...  ∂α/∂θn]
+    [∂β/∂θ1  ∂β/∂θ2  ...  ∂β/∂θn]
+    [∂γ/∂θ1  ∂γ/∂θ2  ...  ∂γ/∂θn]
+```
+
+### Singularities
+
+Kinematic singularities occur when the Jacobian matrix loses rank, causing the robot to lose degrees of freedom in Cartesian space:
+
+- **Boundary Singularities**: Occur at workspace boundaries
+- **Interior Singularities**: Occur within the workspace
+- **Wrist Singularities**: Occur when wrist axes align
+
+## Redundant Manipulation
+
+A robot is redundant when it has more degrees of freedom than required to perform a task.
+
+### Advantages of Redundancy
+- **Obstacle Avoidance**: Additional DOFs for navigating around obstacles
+- **Singularity Avoidance**: Path planning to avoid singular configurations
+- **Optimization**: Optimizing secondary objectives (energy, joint limits)
+
+### Kinematic Optimization
+
+Redundant robots can optimize secondary objectives using the null space of the Jacobian:
+
+```
+θ̇ = J⁺ * v + (I - J⁺ * J) * θ̇₀
+```
+
+Where J⁺ is the pseudoinverse of the Jacobian and θ̇₀ represents motion in the null space.
+
+## Trajectory Planning
+
+Kinematics is essential for trajectory planning, which involves generating smooth paths for robot motion.
+
+### Joint Space vs Cartesian Space
+
+- **Joint Space Planning**: Plan trajectories in joint space, then convert to Cartesian space
+- **Cartesian Space Planning**: Plan trajectories in Cartesian space, then solve inverse kinematics
+
+### Interpolation Methods
+
+- **Linear Interpolation**: Simple but may result in jerky motion
+- **Polynomial Interpolation**: Smooth motion with continuous derivatives
+- **Spline Interpolation**: Piecewise polynomial with continuity constraints
+
+## Applications in Robotics
+
+### Manipulator Control
+- **Pick and Place**: Precise positioning of objects
+- **Assembly Tasks**: Coordinated motion of multiple joints
+- **Welding and Painting**: Continuous path control
+
+### Mobile Manipulation
+- **Mobile Robots**: Combining base motion with manipulator kinematics
+- **Humanoid Robots**: Full-body kinematics for complex tasks
+
+## Challenges and Considerations
+
+### Computational Complexity
+- **Real-time Requirements**: Fast computation for control applications
+- **Accuracy vs Speed**: Trade-offs between precision and computational load
+- **Numerical Stability**: Avoiding singularities and numerical errors
+
+### Physical Constraints
+- **Joint Limits**: Ensuring solutions respect mechanical constraints
+- **Actuator Limits**: Considering velocity and acceleration limits
+- **Collision Avoidance**: Planning paths that avoid obstacles
+
+## Advanced Topics
+
+### Differential Kinematics
+Relating joint velocities to end-effector velocities using the Jacobian matrix.
+
+### Kinematic Calibration
+Compensating for manufacturing tolerances and wear through parameter identification.
+
+### Visual Servoing
+Using visual feedback to control robot motion based on kinematic models.
+
+## Summary
+
+Robot kinematics provides the mathematical foundation for robot motion control, enabling precise positioning and manipulation. Forward kinematics computes end-effector pose from joint angles, while inverse kinematics solves for joint angles to achieve desired poses.
+
+Understanding kinematics is essential for robot control, trajectory planning, and motion optimization. The field continues to evolve with new methods for handling redundancy, avoiding singularities, and improving computational efficiency.
+
+## Further Reading
+
+- Craig, J.J. (2005). Introduction to Robotics: Mechanics and Control. Pearson
+- Siciliano, B., & Khatib, O. (2016). Springer Handbook of Robotics. Springer
+- Spong, M.W., Hutchinson, S., & Vidyasagar, M. (2006). Robot Modeling and Control. Wiley

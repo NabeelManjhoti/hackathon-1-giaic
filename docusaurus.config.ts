@@ -5,9 +5,9 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  favicon: 'img/favicon.ico',
+  title: 'GIAIC Robotix Book',
+  tagline: 'Physical AI & Humanoid Robotics',
+  favicon: 'img/robot-favicon.svg',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -75,22 +75,26 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'My Site',
+      title: 'GIAIC Robotix',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: 'GIAIC Robotix Logo',
+        src: 'img/robot-logo.svg',
       },
       items: [
         {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Book Chapters',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
-          label: 'GitHub',
+          href: 'https://github.com/NabeelManjhoti',
+          label: 'Author',
+          position: 'right',
+        },
+        {
+          href: 'https://github.com/panaversity',
+          label: 'Panaversity',
           position: 'right',
         },
       ],
@@ -99,46 +103,46 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'GIAIC Robotix Book',
           items: [
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: 'Book Chapters',
+              to: '/docs/book/chapter-1',
+            },
+            {
+              label: 'Physical AI & Robotics',
+              to: '/docs/book/intro-physical-ai',
             },
           ],
         },
         {
-          title: 'Community',
+          title: 'Hackathon',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'GIAIC',
+              href: 'https://www.giaic.io',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
+              label: 'Panaversity',
+              href: 'https://github.com/panaversity',
             },
           ],
         },
         {
-          title: 'More',
+          title: 'Author & Resources',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
+              label: 'Nabeel Manjhoti (Author)',
+              href: 'https://github.com/NabeelManjhoti',
             },
             {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              label: 'GitHub Repository',
+              href: 'https://github.com/panaversity/hackathon-1-giaic',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} GIAIC Robotix Hackathon. Built with Docusaurus for Panaversity.`,
     },
     prism: {
       theme: prismThemes.github,

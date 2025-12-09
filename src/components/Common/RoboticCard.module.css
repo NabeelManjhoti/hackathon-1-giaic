@@ -1,0 +1,10 @@
+.roboticCard {
+  margin: 2rem 0;
+  padding: 2rem;
+  transition: all var(--robotic-transition-medium);
+}
+
+.roboticCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--robotic-glow-primary), 0 10px 25px rgba(0, 0, 0, 0.3);
+}

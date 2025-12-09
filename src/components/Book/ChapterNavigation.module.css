@@ -1,0 +1,43 @@
+.chapterNavigation {
+  margin: 2rem 0;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--robotic-border-primary);
+  border-bottom: 1px solid var(--robotic-border-primary);
+  background: var(--robotic-bg-secondary);
+}
+
+.navButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem !important;
+  text-align: center;
+  transition: all var(--robotic-transition-fast);
+  font-size: 0.9rem;
+}
+
+.prevButton {
+  justify-content: flex-start;
+}
+
+.nextButton {
+  justify-content: flex-end;
+}
+
+.homeButton {
+  justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navButton {
+    padding: 0.5rem !important;
+    font-size: 0.8rem;
+  }
+
+  .prevButton,
+  .nextButton {
+    justify-content: center;
+  }
+}
