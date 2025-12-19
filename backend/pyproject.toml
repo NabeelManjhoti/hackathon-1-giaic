@@ -1,0 +1,45 @@
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ['E203', 'W503']  # These conflict with Black's formatting
+exclude = [
+    '.git',
+    '.hg',
+    '.tox',
+    '.venv',
+    'venv',
+    '_build',
+    'build',
+    'dist',
+    'node_modules'
+]
+per-file-ignores = [
+    '__init__.py:F401'  # Allow unused imports in __init__.py files
+]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+disallow_untyped_decorators = true
+disallow_any_generics = false  # Set to true if you want stricter typing
+show_error_codes = true
